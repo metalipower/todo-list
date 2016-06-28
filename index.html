@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html ng-app="TodoList" lang="pt-br">
+	<head>
+		<title>Todo List</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+		<meta name="theme-color" content="#2880bb">		
+		<link href='https://fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>		   
+		<link rel="stylesheet" href="css/styles.css">			
+	</head>
+	
+	<body ng-controller="TodoController as todoController" ng-cloak>
+		<header class="dockbar">
+			Todo List
+		</header>
+		<section class="container">
+			<form ng-submit="todoController.salvar(todoController.tarefa)" name="formTarefa">
+				<input ng-model="todoController.tarefa" placeholder="Descreva sua tarefa" type="text" required></textarea>
+				<button ng-disabled="!formTarefa.$valid"><i class="icon-plus"></i>Adicionar</button>
+			</form>	
+			
+			<ul class="lista">
+				<li ng-repeat="tarefa in todoController.tarefas track by $index" class="tarefa">
+					<div class="descricao pull-left">
+						<input type="checkbox" id="todo{{$index}}" ng-model="tarefa.concluida" ng-change="todoController.tarefaConcluida(tarefa, $index)">
+						<label for="todo{{$index}}" ng-class="[tarefa.concluida? 'concluida':'']">
+							<span></span>{{tarefa.descricao}}
+						</label>
+					</div>
+					<excluir index="{{$index}}"></excluir>
+				</li>
+			</ul>
+		</section>
+		
+		<script src="js/lib/angular.min.js"></script>		
+		<script src="js/app/app.js"></script>
+		<script src="js/services/TodoServices.js"></script>
+		<script src="js/directives/ExcluirDirective.js"></script>
+		<script src="js/controllers/TodoController.js"></script>
+		
+	</body>
+</html>
